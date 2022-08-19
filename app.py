@@ -13,13 +13,13 @@ import platform
 
 
 #Buliding ARTICLES database
-conn = psycopg2.connect(dbname = Articles, user= Ibrahim000, password = pass00pass, host = DB_Host)
+#conn = psycopg2.connect(dbname = Articles, user= Ibrahim000, password = pass00pass, host = DB_Host)
 
 #Logging Info
-os_name = platform.uname()[0].lower()
-if os_name == "windows":
-   time = get_win_login_time()
-   date = get_win_login_date()
+#os_name = platform.uname()[0].lower()
+#if os_name == "windows":
+ #  time = get_win_login_time()
+ #  date = get_win_login_date()
 
     
 
@@ -47,15 +47,15 @@ class ClassificationResource:
             predicted_category: predicted_category
         })
 
-    cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
-    cur.execute('CREATE TABLE ARTICLES (Date integer, Date integer, Title text, Body text, Category Text);')
-    cur.execute('INSERT INTO ARTICLES (Date) Values(%d/%d/%d),(date)')
-    cur.execute('INSERT INTO ARTICLES (time) Values(%d/%d/%d),(time)')
-    cur.execute('INSERT INTO ARTICLES (Body) Values(%s),(article_body)')
-    cur.execute('INSERT INTO ARTICLES (Category) Values(%s),(predicted_category)')
+    #cur = conn.cursor(cursor_factory=psycopg2.extras.DictCursor)
+    #cur.execute('CREATE TABLE ARTICLES (Date integer, Date integer, Title text, Body text, Category Text);')
+    #cur.execute('INSERT INTO ARTICLES (Date) Values(%d/%d/%d),(date)')
+    #cur.execute('INSERT INTO ARTICLES (time) Values(%d/%d/%d),(time)')
+   # cur.execute('INSERT INTO ARTICLES (Body) Values(%s),(article_body)')
+    #cur.execute('INSERT INTO ARTICLES (Category) Values(%s),(predicted_category)')
 
 
-    conn.commit()
+    #conn.commit()
 
 
 
@@ -67,5 +67,5 @@ if __name__ == '_main_':
     with make_server(',8000,app') as httpd:
         print('server is running on port 8000...')
 
-cur.close()
-conn.close()
+#cur.close()
+#conn.close()
