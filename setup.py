@@ -1,65 +1,66 @@
-# Copyright (C) 2019-2020 Moez Ali <moez.ali@queensu.ca>
-# License: MIT, moez.ali@queensu.ca
+#!/usr/bin/env python
+# This file is dual licensed under the terms of the Apache License, Version
+# 2.0, and the BSD License. See the LICENSE file in the root of this repository
+# for complete details.
+from __future__ import absolute_import, division, print_function
 
-from setuptools import find_packages, setup
+import os
+import re
 
-
-def readme():
-    with open("README.md", encoding="utf8") as f:
-        README = f.read()
-    return README
-
-
-with open("requirements.txt") as f:
-    required = f.read().splitlines()
-
-with open("requirements-optional.txt") as f:
-    required_optional = f.read()
-
-with open("requirements-test.txt") as f:
-    required_test = f.read().splitlines()
+from setuptools import setup
 
 
-extras_require = {
-    "analysis": required_optional.split("\n\n")[0].splitlines(),
-    "models": required_optional.split("\n\n")[1].splitlines(),
-    "tuners": required_optional.split("\n\n")[2].splitlines(),
-    "mlops": required_optional.split("\n\n")[3].splitlines(),
-    "nlp": required_optional.split("\n\n")[4].splitlines(),
-    "parallel": required_optional.split("\n\n")[5].splitlines(),
-}
+base_dir = os.path.dirname(__file__)
 
-extras_require["full"] = (
-    extras_require["analysis"]
-    + extras_require["models"]
-    + extras_require["tuners"]
-    + extras_require["mlops"]
-    + extras_require["parallel"]
-)
+about = {}
+with open(os.path.join(base_dir, "pipfile", "__about__.py")) as f:
+    exec(f.read(), about)
+
+with open(os.path.join(base_dir, "README.rst")) as f:
+    long_description = f.read()
+
+with open(os.path.join(base_dir, "CHANGELOG.rst")) as f:
+    # Remove :issue:`ddd` tags that breaks the description rendering
+    changelog = re.sub(
+        r":issue:`(\d+)`",
+        r"`#\1 <https://github.com/pypa/pipfile/issues/\1>`__",
+        f.read(),
+    )
+    long_description = "\n".join([long_description, changelog])
+
 
 setup(
-    name="pycaret",
-    version="3.0.0.rc3",
-    description="PyCaret - An open source, low-code machine learning library in Python.",
-    long_description=readme(),
-    long_description_content_type="text/markdown",
-    url="https://github.com/pycaret/pycaret",
-    author="Moez Ali",
-    author_email="moez.ali@queensu.ca",
-    license="MIT",
+    name=about["__title__"],
+    version=about["__version__"],
+
+    description=about["__summary__"],
+    long_description=long_description,
+    license=about["__license__"],
+    url=about["__uri__"],
+
+    author=about["__author__"],
+    author_email=about["__email__"],
+
+    install_requires=['toml'],
+
     classifiers=[
-        "License :: OSI Approved :: MIT License",
-        "Programming Language :: Python :: 3.7",
-        "Programming Language :: Python :: 3.8",
-        "Programming Language :: Python :: 3.9",
-        "Topic :: Scientific/Engineering :: Artificial Intelligence",
-        "License :: OSI Approved :: MIT License",
-        "Operating System :: OS Independent",
+        "Intended Audience :: Developers",
+
+        "License :: OSI Approved :: Apache Software License",
+        "License :: OSI Approved :: BSD License",
+
+        "Programming Language :: Python",
+        "Programming Language :: Python :: 2",
+        "Programming Language :: Python :: 2.6",
+        "Programming Language :: Python :: 2.7",
+        "Programming Language :: Python :: 3",
+        "Programming Language :: Python :: 3.3",
+        "Programming Language :: Python :: 3.4",
+        "Programming Language :: Python :: 3.5",
+        "Programming Language :: Python :: 3.6",
     ],
-    packages=find_packages(include=["pycaret*"]),
-    include_package_data=True,
-    install_requires=required,
-    extras_require=extras_require,
-    tests_require=required_test,
-    python_requires=">=3.10",
+
+    packages=[
+        "pipfile",
+    ],
 )
