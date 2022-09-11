@@ -51,7 +51,7 @@ class ClassificationResource:
     #cur.execute('CREATE TABLE ARTICLES (Date integer, Date integer, Title text, Body text, Category Text);')
     #cur.execute('INSERT INTO ARTICLES (Date) Values(%d/%d/%d),(date)')
     #cur.execute('INSERT INTO ARTICLES (time) Values(%d/%d/%d),(time)')
-   # cur.execute('INSERT INTO ARTICLES (Body) Values(%s),(article_body)')
+    #cur.execute('INSERT INTO ARTICLES (Body) Values(%s),(article_body)')
     #cur.execute('INSERT INTO ARTICLES (Category) Values(%s),(predicted_category)')
 
 
